@@ -45,21 +45,18 @@ def insert():
     get()
     input("Trykk ENTER for å gå videre!")
     
-
-
-
 def delete():
     # let user enter person to delete
     print("Sletting av lånetaker.")
     del_identity_number = input("Skriv inn lånenummer: ")
     
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import database
+    import pyodbc  
+    connectionString = database.GetConnectionString()   
+    print(connectionString)
+    input("waiting...")
+    conn = pyodbc.connect(connectionString)
 
     rowsAffected = 0   
 
