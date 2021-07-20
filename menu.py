@@ -4,7 +4,7 @@ import loan
 
 while True:
     import subprocess as sp
-    sp.call('cls', shell=True)
+    #sp.call('cls', shell=True)
     
     # print menu and read user choice
     print("")

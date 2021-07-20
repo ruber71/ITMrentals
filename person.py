@@ -16,7 +16,7 @@ def get():
     # tidy up and move on
     cursor_search.close()          
     conn.close() 
-    #input("Trykk ENTER for å gå videre!")
+    input("Trykk ENTER for å gå videre!")
 
 def insert():
     # let user enter person details
@@ -43,7 +43,7 @@ def insert():
     conn.close()
 
     get()
-    #input("Trykk ENTER for å gå videre!")
+    input("Trykk ENTER for å gå videre!")
     
 
 
@@ -60,22 +60,27 @@ def delete():
                                   'Database=Rentals;'
                                   'USER=sa;'
                                   'PWD=sa12345;')
-    # create cursor    
-    cursor_delete = conn.cursor()    
 
-    cursor_delete.execute('''
-                DELETE FROM Person 
-                WHERE IdentityNumber = (?)
-               '''
-                , del_identity_number)
-          
-    cursor_delete.commit()
+    rowsAffected = 0   
 
-    # tidy up and move on
-    cursor_delete.close()          
-    conn.close()
-    
-    #input("Trykk ENTER for å gå videre!")
-    get()
+    try:
+        # create query and run it      
+        SQL = r'exec dbo.SP_DeletePerson @IdentityNumber = ' + "'" + str(del_identity_number) + "'"
+        #print(SQL)
+        cursor = conn.cursor()
+        cursor.execute(SQL)
+        conn.commit()
+        print("Sletteoperasjon forsøkt.")
+    except pyodbc.Error as err:
+        print("Ugyldig format på lånenummer eller annen feil!")
+        print("Databasefeil: %s" % err)
+    except:
+        print("Generell feil!")
+    finally:
+        cursor.close()
+        conn.close()        
+        get()
+        print("Sjekk i listen over om lånenummer ble slettet.")
+        input("Trykk ENTER for å gå videre!")
 
 

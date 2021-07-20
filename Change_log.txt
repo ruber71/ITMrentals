@@ -1,2 +1,0 @@
-V4-04.03.2021:
-- la til funksjon for å levere inn utstyr.
