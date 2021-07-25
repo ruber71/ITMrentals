@@ -16,16 +16,8 @@ def get():
     # tidy up and move on
     cursor_search.close()          
     conn.close() 
-    input("Trykk ENTER for å gå videre!")
 
-def insert():
-    # let user enter person details
-    new_identity_number = input("Skriv inn lånenummer: ")
-    new_name = input("Skriv fullt navn: ")    
-    new_mobile = input("Skriv inn mobilnummer: ")
-    new_role = input("Skriv inn rolle: ")
-    new_class = input("Skriv inn klasse: ")
-    
+def insert(new_identity_number, new_name, new_mobile, new_role, new_class):
     # establish database connection
     import pyodbc     
     conn = pyodbc.connect('Driver={SQL Server};'
@@ -42,28 +34,18 @@ def insert():
     cursor_insert.close()          
     conn.close()
 
-    get()
-    input("Trykk ENTER for å gå videre!")
     
-def delete():
-    # let user enter person to delete
-    print("Sletting av lånetaker.")
-    del_identity_number = input("Skriv inn lånenummer: ")
-    
+def delete(del_identity_number):
     # establish database connection
     import database
     import pyodbc  
     connectionString = database.GetConnectionString()   
-    print(connectionString)
-    input("waiting...")
     conn = pyodbc.connect(connectionString)
-
-    rowsAffected = 0   
+    #rowsAffected = 0   # problems getting rows affected from MS SQL...
 
     try:
         # create query and run it      
         SQL = r'exec dbo.SP_DeletePerson @IdentityNumber = ' + "'" + str(del_identity_number) + "'"
-        #print(SQL)
         cursor = conn.cursor()
         cursor.execute(SQL)
         conn.commit()
@@ -76,8 +58,6 @@ def delete():
     finally:
         cursor.close()
         conn.close()        
-        get()
-        print("Sjekk i listen over om lånenummer ble slettet.")
-        input("Trykk ENTER for å gå videre!")
+
 
 

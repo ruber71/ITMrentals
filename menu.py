@@ -1,10 +1,11 @@
 import person
 import equipment
 import loan
+import autotest
 
 while True:
     import subprocess as sp
-    #sp.call('cls', shell=True)
+    sp.call('cls', shell=True)
     
     # print menu and read user choice
     print("")
@@ -24,6 +25,7 @@ while True:
     print("23. Endre utstyr")
     
     print("30. Statistikk")
+    print("40. Auto test")
     print(" 0. Avslutt")        
     menu_selection = input("Valg:")
 
@@ -35,11 +37,24 @@ while True:
     elif menu_selection == "3":
         loan.get()        
     elif menu_selection == "10":
-        person.get()        
-    elif menu_selection == "11":        
-        person.insert()
-    elif menu_selection == "12":
-        person.delete()
+        person.get()   
+        input("Trykk ENTER for å gå videre!")     
+    elif menu_selection == "11":   # person insert
+        new_identity_number = input("Skriv inn lånenummer: ")
+        new_name = input("Skriv fullt navn: ")    
+        new_mobile = input("Skriv inn mobilnummer: ")
+        new_role = input("Skriv inn rolle: ")
+        new_class = input("Skriv inn klasse: ")    
+        person.insert(new_identity_number, new_name, new_mobile, new_role, new_class)
+        get()
+        input("Trykk ENTER for å gå videre!")
+    elif menu_selection == "12":    # person delete
+        print("Sletting av lånetaker.")    
+        del_identity_number = input("Skriv inn lånenummer: ")
+        person.delete(del_identity_number)
+        person.get()
+        print("Sjekk i listen over om lånenummer ble slettet.")
+        input("Trykk ENTER for å gå videre!")
     elif menu_selection == "13":
         print("13")
     elif menu_selection == "20":        
@@ -52,6 +67,8 @@ while True:
         print("23")
     elif menu_selection == "30":
         print("30")
+    elif menu_selection == "40":
+        autotest.run()
     elif menu_selection == "0":
         break        
     else:
