@@ -2,15 +2,18 @@ import person
 import equipment
 import loan
 import autotest
+import translation
 
 while True:
     import subprocess as sp
     sp.call('cls', shell=True)
+
+    languageCode = "EN"
     
     # print menu and read user choice
     print("")
     print("*** Velkommen til ITM Utlånssytem ***")
-    print(" 1. Nytt utlån*")
+    print(translation.GetTranslatedText("REGLOAN", languageCode))
     print(" 2. Innlevering*")
     print(" 3. Vis utlån*")
 
@@ -52,7 +55,7 @@ while True:
         print("Sletting av lånetaker.")    
         del_identity_number = input("Skriv inn lånenummer: ")
         person.delete(del_identity_number)
-        person.get()
+        person.get()    # get() should return an object? autotest trenger å telle ant. objekter og også søke i resultatsettet? eller bar get(identity_number) identy_number kan være en liste.
         print("Sjekk i listen over om lånenummer ble slettet.")
         input("Trykk ENTER for å gå videre!")
     elif menu_selection == "13":
@@ -74,10 +77,3 @@ while True:
     else:
         print("*** Menyvalg finnes ikke...")
 exit("Ha det...")
-
-
-
-
-    
-
-
