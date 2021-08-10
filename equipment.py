@@ -21,7 +21,7 @@ def get():
     # tidy up and move on
     cursor_search.close()          
     conn.close()
-    #input("Trykk ENTER for å gå videre!")
+    input("Trykk ENTER for å gå videre!")
     
 
 def insert():

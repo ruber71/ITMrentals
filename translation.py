@@ -11,8 +11,10 @@ def GetTranslatedText(tag, languageCode):
         SQL = r'exec dbo.SP_GetGetTranslatedText @tag = ' + "'" + str(tag) + "', " + '@language_code = '+ "'" + str(languageCode) + "'"
         cursor = conn.cursor()
         cursor.execute(SQL)    
-        print(cursor.fetchone().Text)
-        input("waiting...")
+        translated_text = cursor.fetchone().Text
+        
+        #print(cursor.fetchone().Text)        
+        #input("waiting...")
      
     except pyodbc.Error as err:        
         print("Databasefeil: %s" % err)
@@ -20,5 +22,6 @@ def GetTranslatedText(tag, languageCode):
         print("Generell feil!")
     finally:
         cursor.close()
-        conn.close()        
+        conn.close()     
+        return translated_text   
 

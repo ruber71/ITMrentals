@@ -3,17 +3,24 @@ import equipment
 import loan
 import autotest
 import translation
+import access
+import settings
+import subprocess as sp
+sp.call('cls', shell=True)
 
-while True:
-    import subprocess as sp
+# login
+print("*** Pålogging for ITM Utlånssytem ***")
+user_name = access.login()
+languageCode = settings.get_user_language(user_name)
+# checkif auth succeded?
+
+
+while True:    
     sp.call('cls', shell=True)
-
-    languageCode = "EN"
-    
+    print("*** Bruker: " + user_name)
     # print menu and read user choice
-    print("")
     print("*** Velkommen til ITM Utlånssytem ***")
-    print(translation.GetTranslatedText("REGLOAN", languageCode))
+    print(translation.GetTranslatedText("REGLOAN", languageCode).strip())
     print(" 2. Innlevering*")
     print(" 3. Vis utlån*")
 
