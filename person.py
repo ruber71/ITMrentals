@@ -1,10 +1,9 @@
 def get():
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'Trusted_Connection=yes;')
+    import pyodbc
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
 
     # perform query and print result
     query_search = "SELECT * FROM Person"
@@ -20,11 +19,10 @@ def get():
 def insert(new_identity_number, new_name, new_mobile, new_role, new_class):
     # establish database connection
     import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+    
     # create cursor    
     cursor_insert = conn.cursor()
     cursor_insert.execute("insert into person(IdentityNumber, name, mobile, role, class) values (?, ?, ?, ?, ?)", new_identity_number, new_name, new_mobile, new_role, new_class)

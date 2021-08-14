@@ -1,12 +1,10 @@
 
 def get():
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import pyodbc    
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
 
     # perform query and print result
     query_search = "SELECT * FROM Equipment"
@@ -33,12 +31,11 @@ def insert():
     new_accessories = input("Skriv inn evt. tilbehør: ")
     
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import pyodbc   
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+
     # create cursor    
     cursor_insert = conn.cursor()
     cursor_insert.execute("insert into equipment(barcode, name, status, description, accessories) values (?, ?, ?, ?, ?)", new_barcode, new_name, new_status, new_description, new_accessories)
@@ -57,12 +54,11 @@ def delete():
     del_barcode = input("Skriv inn strekkode: ")
     
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import pyodbc
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+ 
     # create cursor    
     cursor_delete = conn.cursor()    
 

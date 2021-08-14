@@ -9,21 +9,27 @@ import subprocess as sp
 sp.call('cls', shell=True)
 
 # login
-print("*** Pålogging for ITM Utlånssytem ***")
+print("*** Logon ***")
 user_name = access.login()
-languageCode = settings.get_user_language(user_name)
-# checkif auth succeded?
 
-
-while True:    
+while user_name != "AUTH_FAILURE":    
+    user_role = "SuperUser" # TODO get this from Access-table in database
+    user_language = settings.get_user_language(user_name)
     sp.call('cls', shell=True)
-    print("*** Bruker: " + user_name)
-    # print menu and read user choice
-    print("*** Velkommen til ITM Utlånssytem ***")
-    print(translation.GetTranslatedText("REGLOAN", languageCode).strip())
-    print(" 2. Innlevering*")
-    print(" 3. Vis utlån*")
+    # TODO  Add function to add user language dynamically using Google translate
 
+    # print user and accesslevel
+    print(translation.GetTranslatedText("USERNAME", user_language).strip() + user_name)
+    print(translation.GetTranslatedText("ACCESSLEVEL", user_language).strip() + user_role)
+    print(translation.GetTranslatedText("LANGUAGE", user_language).strip() + user_language)
+
+    # print menu and read user choice  
+    print(translation.GetTranslatedText("WELCOME", user_language).strip())  
+    print(translation.GetTranslatedText("REGLOAN", user_language).strip())  
+    print(translation.GetTranslatedText("RETURN", user_language).strip())    
+    print(translation.GetTranslatedText("VIEWLOANS", user_language).strip())  
+
+    # TODO Translate menu
     print("10. Vis lånere*")
     print("11. Ny låner*")    
     print("12. Slett låner*")
@@ -40,11 +46,11 @@ while True:
     menu_selection = input("Valg:")
 
     # go to chosen function
-    if menu_selection == "1":
+    if menu_selection == "1" or menu_selection == "01":
         loan.insert()
-    elif menu_selection == "2":
+    elif menu_selection == "2"or menu_selection == "02":
         loan.returned()
-    elif menu_selection == "3":
+    elif menu_selection == "3"or menu_selection == "03":
         loan.get()        
     elif menu_selection == "10":
         person.get()   
@@ -56,7 +62,7 @@ while True:
         new_role = input("Skriv inn rolle: ")
         new_class = input("Skriv inn klasse: ")    
         person.insert(new_identity_number, new_name, new_mobile, new_role, new_class)
-        get()
+        person.get()
         input("Trykk ENTER for å gå videre!")
     elif menu_selection == "12":    # person delete
         print("Sletting av lånetaker.")    

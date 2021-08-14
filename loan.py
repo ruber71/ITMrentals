@@ -1,11 +1,10 @@
 def get():
     # establish database connection
     import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'Trusted_Connection=yes;')
-
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+ 
     # perform query and print result
     query_search = '''
                     SELECT E.Barcode, E.Name, P.IdentityNumber, P.Name as PersonName, L.FromDate, L.ToDate 
@@ -38,12 +37,11 @@ def insert():
     new_start_date = date.today().isoformat()
     
     # establish database connection
-    import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import pyodbc  
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+ 
     # create cursor to find IDs
     cursor_find = conn.cursor()
     cursor_find.execute('''  
@@ -89,11 +87,10 @@ def returned():
     
     # establish database connection
     import pyodbc     
-    conn = pyodbc.connect('Driver={SQL Server};'
-                                  'Server=LOCALHOST\SQLEXPRESS;'
-                                  'Database=Rentals;'
-                                  'USER=sa;'
-                                  'PWD=sa12345;')
+    import database
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+ 
     # create cursor to find IDs
     cursor_find = conn.cursor()
     cursor_find.execute('''  
