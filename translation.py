@@ -1,3 +1,5 @@
+# TODO  Add function to add user language dynamically using Google translate?
+
 def GetTranslatedText(tag, languageCode):
     # establish database connection
     import database

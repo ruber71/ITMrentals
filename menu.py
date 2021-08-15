@@ -6,28 +6,27 @@ import translation
 import access
 import settings
 import subprocess as sp
+import access_object
 sp.call('cls', shell=True)
 
 # login
-print("*** Logon ***")
-user_name = access.login()
+user1 = access_object.User()    # user obejct to hold user info
+user1.login()
 
-while user_name != "AUTH_FAILURE":    
-    user_role = "SuperUser" # TODO get this from Access-table in database
-    user_language = settings.get_user_language(user_name)
-    sp.call('cls', shell=True)
-    # TODO  Add function to add user language dynamically using Google translate
+while user1.user_auth == "OK":  
+    sp.call('cls', shell=True)  
 
-    # print user and accesslevel
-    print(translation.GetTranslatedText("USERNAME", user_language).strip() + user_name)
-    print(translation.GetTranslatedText("ACCESSLEVEL", user_language).strip() + user_role)
-    print(translation.GetTranslatedText("LANGUAGE", user_language).strip() + user_language)
-
+    # print user info
+    print(translation.GetTranslatedText("USERAUTH", user1.user_language).strip() + user1.user_auth)
+    print(translation.GetTranslatedText("USERNAME", user1.user_language).strip() + user1.user_name)
+    print(translation.GetTranslatedText("ACCESSLEVEL", user1.user_language).strip() + user1.user_role)    
+    print(translation.GetTranslatedText("LANGUAGE", user1.user_language).strip() + user1.user_language)
+    
     # print menu and read user choice  
-    print(translation.GetTranslatedText("WELCOME", user_language).strip())  
-    print(translation.GetTranslatedText("REGLOAN", user_language).strip())  
-    print(translation.GetTranslatedText("RETURN", user_language).strip())    
-    print(translation.GetTranslatedText("VIEWLOANS", user_language).strip())  
+    print(translation.GetTranslatedText("WELCOME", user1.user_language).strip())  
+    print(translation.GetTranslatedText("REGLOAN", user1.user_language).strip())  
+    print(translation.GetTranslatedText("RETURN", user1.user_language).strip())    
+    print(translation.GetTranslatedText("VIEWLOANS", user1.user_language).strip())  
 
     # TODO Translate menu
     print("10. Vis lånere*")
@@ -45,7 +44,7 @@ while user_name != "AUTH_FAILURE":
     print(" 0. Avslutt")        
     menu_selection = input("Valg:")
 
-    # go to chosen function
+    # perform chosen menu item
     if menu_selection == "1" or menu_selection == "01":
         loan.insert()
     elif menu_selection == "2"or menu_selection == "02":
@@ -68,7 +67,7 @@ while user_name != "AUTH_FAILURE":
         print("Sletting av lånetaker.")    
         del_identity_number = input("Skriv inn lånenummer: ")
         person.delete(del_identity_number)
-        person.get()    # get() should return an object? autotest trenger å telle ant. objekter og også søke i resultatsettet? eller bar get(identity_number) identy_number kan være en liste.
+        person.get()    # TODO get() should return an object? autotest trenger å telle ant. objekter og også søke i resultatsettet? eller bare get(identity_number) identy_number kan være en liste.
         print("Sjekk i listen over om lånenummer ble slettet.")
         input("Trykk ENTER for å gå videre!")
     elif menu_selection == "13":
