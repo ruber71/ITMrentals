@@ -3,7 +3,6 @@ import equipment
 import loan
 import autotest
 import translation
-import access
 import settings
 import subprocess as sp
 import access_object
@@ -17,16 +16,16 @@ while user1.user_auth == "OK":
     sp.call('cls', shell=True)  
 
     # print user info
-    print(translation.GetTranslatedText("USERAUTH", user1.user_language).strip() + user1.user_auth)
-    print(translation.GetTranslatedText("USERNAME", user1.user_language).strip() + user1.user_name)
-    print(translation.GetTranslatedText("ACCESSLEVEL", user1.user_language).strip() + user1.user_role)    
-    print(translation.GetTranslatedText("LANGUAGE", user1.user_language).strip() + user1.user_language)
+    print(translation.SP_TRANS_GetGetTranslatedText("USERAUTH", user1.user_language).strip() + user1.user_auth)
+    print(translation.SP_TRANS_GetGetTranslatedText("USERNAME", user1.user_language).strip() + user1.user_name)
+    print(translation.SP_TRANS_GetGetTranslatedText("ACCESSLEVEL", user1.user_language).strip() + user1.user_role)    
+    print(translation.SP_TRANS_GetGetTranslatedText("LANGUAGE", user1.user_language).strip() + user1.user_language)
     
     # print menu and read user choice  
-    print(translation.GetTranslatedText("WELCOME", user1.user_language).strip())  
-    print(translation.GetTranslatedText("REGLOAN", user1.user_language).strip())  
-    print(translation.GetTranslatedText("RETURN", user1.user_language).strip())    
-    print(translation.GetTranslatedText("VIEWLOANS", user1.user_language).strip())  
+    print(translation.SP_TRANS_GetGetTranslatedText("WELCOME", user1.user_language).strip())  
+    print(translation.SP_TRANS_GetGetTranslatedText("REGLOAN", user1.user_language).strip())  
+    print(translation.SP_TRANS_GetGetTranslatedText("RETURN", user1.user_language).strip())    
+    print(translation.SP_TRANS_GetGetTranslatedText("VIEWLOANS", user1.user_language).strip())  
 
     # TODO Translate menu
     print("10. Vis lånere*")
@@ -40,6 +39,7 @@ while user1.user_auth == "OK":
     print("23. Endre utstyr")
     
     print("30. Statistikk")
+    print("31. Endre passord")
     print("40. Auto test")
     print(" 0. Avslutt")        
     menu_selection = input("Valg:")
@@ -82,6 +82,8 @@ while user1.user_auth == "OK":
         print("23")
     elif menu_selection == "30":
         print("30")
+    elif menu_selection == "31":
+        user1.reset_password()
     elif menu_selection == "40":
         autotest.run()
     elif menu_selection == "0":
