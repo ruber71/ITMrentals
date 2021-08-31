@@ -1,5 +1,29 @@
-# DONE  Add function to add user language dynamically using Google translate?
+def GetTranslatedText(tag, languageCode):
+    # establish database connection
+    import database
+    import pyodbc  
+    connectionString = database.GetConnectionString()   
+    conn = pyodbc.connect(connectionString)
+    #rowsAffected = 0   # problems getting rows affected from MS SQL...    
+    try:
+        # create query and run it  
+        SQL = r'exec dbo.SP_TRANS_GetGetTranslatedText @tag = ' + "'" + str(tag) + "', " + '@language_code = '+ "'" + str(languageCode) + "'"
+        cursor = conn.cursor()
+        cursor.execute(SQL)  
+        translated_text = "---"  
+        translated_text = cursor.fetchone().Text
 
+     
+    except pyodbc.Error as err:        
+        print("Databasefeil: %s" % err)
+    except:
+        print("Generell feil!")
+    finally:
+        cursor.close()
+        conn.close()     
+        return translated_text   
+
+# DONE  Add function to add user language dynamically using Google translate?
 def GoogleTranslate(language_code, text_eng):      
     # get translation from Google Translate API
     from googletrans import Translator
@@ -13,7 +37,7 @@ def update_translations():
     # establish database connection
     import database
     import pyodbc  
-    connectionString = database.GetConnectionString()   
+    connectionString = database.GetConnectionString() 
     conn = pyodbc.connect(connectionString)
     #rowsAffected = 0   # problems getting rows affected from MS SQL...    
 
@@ -30,6 +54,7 @@ def update_translations():
             #trans_tag = row[3]       
             text_eng = row[4]
             text_trans = GoogleTranslate(language_code, text_eng)
+            #text_trans = "Dette er en test"
 
             # update Translate-table with translation
             cursor.execute("UPDATE Translation SET Text = ? WHERE TranslationID = ?", text_trans, trans_id)

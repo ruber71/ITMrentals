@@ -16,6 +16,7 @@ def get():
     cursor_search.close()          
     conn.close() 
 
+
 def insert(new_identity_number, new_name, new_mobile, new_role, new_class):
     # establish database connection
     import pyodbc     
@@ -33,7 +34,7 @@ def insert(new_identity_number, new_name, new_mobile, new_role, new_class):
     conn.close()
 
     
-def delete(del_identity_number):
+def delete2(del_identity_number):
     # establish database connection
     import database
     import pyodbc  
@@ -57,5 +58,15 @@ def delete(del_identity_number):
         cursor.close()
         conn.close()        
 
+def delete(del_identity_number):
+    import database
+    sp_name = "dbo.SP_DeletePerson"
+    sp_parameters = {
+        "@IdentityNumber": del_identity_number
+    }
 
+    record_no = 0
+    res = database.exec_sp(sp_name, sp_parameters)
+    #for row in res:   
+     #   print(row[0])
 
