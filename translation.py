@@ -1,4 +1,5 @@
 def GetTranslatedText(tag, languageCode):
+    
     # establish database connection
     import database
     import pyodbc  
